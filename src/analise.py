@@ -45,3 +45,19 @@ df_viagens["Valor devolução"] = (
 df_viagens["Valor outros gastos"] = (
     df_viagens["Valor outros gastos"].str.replace(",", ".").astype(float)
 )
+
+# %%
+df_viagens.info()
+
+# %%
+# soma das colunas de gastos
+
+df_viagens["Despesas"] = (
+    df_viagens["Valor diárias"]
+    + df_viagens["Valor passagens"]
+    + df_viagens["Valor devolução"]
+    + df_viagens["Valor outros gastos"]
+)
+# %%
+df_viagens.head()
+# %%
