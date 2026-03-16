@@ -58,6 +58,12 @@ df_viagens["Despesas"] = (
     + df_viagens["Valor devolução"]
     + df_viagens["Valor outros gastos"]
 )
+
 # %%
 df_viagens.head()
+
+# %%
+# tratando nulos
+df_viagens["Cargo"] = df_viagens["Cargo"].fillna("NAO INFORMADO")
+
 # %%
