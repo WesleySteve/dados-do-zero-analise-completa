@@ -26,3 +26,22 @@ df_viagens = pd.read_csv(
 df_viagens.head()
 
 # %%
+df_viagens.info()
+# %%
+# transformando valores objects em float
+
+df_viagens["Valor diárias"] = (
+    df_viagens["Valor diárias"].str.replace(",", ".").astype(float)
+)
+
+df_viagens["Valor passagens"] = (
+    df_viagens["Valor passagens"].str.replace(",", ".").astype(float)
+)
+
+df_viagens["Valor devolução"] = (
+    df_viagens["Valor devolução"].str.replace(",", ".").astype(float)
+)
+
+df_viagens["Valor outros gastos"] = (
+    df_viagens["Valor outros gastos"].str.replace(",", ".").astype(float)
+)
