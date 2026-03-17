@@ -78,3 +78,17 @@ df_viagens["Período - Data de fim"] = pd.to_datetime(
 
 # %%
 df_viagens.info()
+
+# %%
+# mes_viagem
+df_viagens["Mes_viagem"] = df_viagens["Período - Data de início"].dt.month_name()
+
+# %%
+# dias_viagem
+df_viagens["Dias_viagem"] = (
+    df_viagens["Período - Data de fim"] - df_viagens["Período - Data de início"]
+).dt.days
+
+# %%
+df_viagens.head()
+# %%
