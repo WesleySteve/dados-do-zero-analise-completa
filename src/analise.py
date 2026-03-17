@@ -27,6 +27,7 @@ df_viagens.head()
 
 # %%
 df_viagens.info()
+
 # %%
 # transformando valores objects em float
 
@@ -67,3 +68,13 @@ df_viagens.head()
 df_viagens["Cargo"] = df_viagens["Cargo"].fillna("NAO INFORMADO")
 
 # %%
+# tratando datas
+df_viagens["Período - Data de início"] = pd.to_datetime(
+    df_viagens["Período - Data de início"], format="%d/%m/%Y"
+)
+df_viagens["Período - Data de fim"] = pd.to_datetime(
+    df_viagens["Período - Data de fim"], format="%d/%m/%Y"
+)
+
+# %%
+df_viagens.info()
