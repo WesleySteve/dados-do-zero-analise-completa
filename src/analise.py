@@ -107,6 +107,7 @@ df_viagens.head()
 )
 
 # %%
+# novas colunas base no cargo
 df_viagens_consolidado = (
     df_viagens.groupby("Cargo")
     .agg(
@@ -118,3 +119,59 @@ df_viagens_consolidado = (
     )
     .reset_index()
 )
+
+# %%
+df_cargos = df_viagens["Cargo"].value_counts(normalize=True).reset_index()
+df_cargos
+
+# %%
+df_cargos.loc[df_cargos["proportion"] > 0.01, "Cargo"]
+
+# %%
+cargos_relevantes = df_cargos.loc[df_cargos["proportion"] > 0.01, "Cargo"]
+
+# %%
+filtro = df_viagens_consolidado["Cargo"].isin(cargos_relevantes)
+
+# %%
+df_final = df_viagens_consolidado[filtro].sort_values(by="nro_viagens", ascending=False)
+
+# %%
+df_final.head()
+
+# %%
+# ------- GRAFICO ----------- #
+# %%
+df_final = df_final.sort_values(by="nro_viagens", ascending=False)
+
+# %%
+df_final.plot(x="Cargo", y="nro_viagens", kind="bar")
+
+# %%
+import matplotlib.pyplot as plt
+
+# %%
+fig, ax = plt.subplots(figsize=(16, 6))
+
+ax.barh(df_final["Cargo"], df_final["nro_viagens"])
+ax.invert_yaxis()
+
+fig.suptitle("Viagens por cargo publico (2024)", fontsize=14)
+
+plt.figtext(0.65, 0.90, "Fonte: Portal da Transparência", fontsize=9)
+
+plt.grid(color="gray", linestyle="--", linewidth="0.3")
+plt.yticks(fontsize=8)
+plt.xlabel("Numero de viagens")
+
+plt.show()
+
+# %%
+# definindo diretorio para salvar o arquivo final
+OUTPUT_DIR = os.path.join(VIAGENS_DIR_2024, "output")
+
+# %%
+# SALVANDO ARQUIVO
+df_viagens.to_csv(os.path.join(OUTPUT_DIR, "viagens_final.csv"), index=False)
+
+# %%
