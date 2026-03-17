@@ -91,4 +91,30 @@ df_viagens["Dias_viagem"] = (
 
 # %%
 df_viagens.head()
+
 # %%
+
+(
+    df_viagens.groupby("Cargo")
+    .agg(  # coluna usada da tabela principal, agregação
+        despesa_nedia=("Despesas", "mean"),
+        duracao_media=("Dias_viagem", "mean"),
+        despesas_totais=("Despesas", "sum"),
+        destino_mais_frequentes=("Destinos", pd.Series.mode),  # moda
+        nro_viagens=("Nome", "count"),
+    )
+    .reset_index()
+)
+
+# %%
+df_viagens_consolidado = (
+    df_viagens.groupby("Cargo")
+    .agg(
+        despesa_nedia=("Despesas", "mean"),
+        duracao_media=("Dias_viagem", "mean"),
+        despesas_totais=("Despesas", "sum"),
+        destino_mais_frequentes=("Destinos", pd.Series.mode),  # moda
+        nro_viagens=("Nome", "count"),
+    )
+    .reset_index()
+)
